@@ -1,4 +1,4 @@
-@Library('jenkins_shard_libarary') _
+@Library('jenkins-shard-library') _
 
 pipeline {
     agent any
