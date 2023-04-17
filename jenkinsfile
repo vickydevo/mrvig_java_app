@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage ('git checkout') {
+        stage ('git checkout3') {
             steps {
                 script {
                     git branch: 'master', url: 'https://github.com/vickydevo/mrvig_java_app.git'
