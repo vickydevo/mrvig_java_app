@@ -104,6 +104,41 @@ pipeline {
             }
         }
 
+        stage ('DockerECR scan image :trivy') {
+
+         when { expression { params.action=='create'}  }  
+            steps {
+                script {
+
+                    dockerImageScan("${params.aws_account_id}","${params.region}","${params.ecr_repoName}")
+                }
+            }
+        }
+
+         stage('Docker push image :ECR') {
+
+         when { expression { params.action=='create'}  }  
+            steps {
+                script {
+
+                    dockerImagePush("${params.aws_account_id}","${params.region}","${params.ecr_repoName}")
+                }
+            }
+        }
+
+        stage('DockerImageCleanUp :ECR') {
+
+         when { expression { params.action=='create'}  }  
+            steps {
+                script {
+
+                    dockerImageCleanup("${params.aws_account_id}","${params.region}","${params.ecr_repoName}")
+                }
+            }
+        }
+
+
+
     }
 
 }   
