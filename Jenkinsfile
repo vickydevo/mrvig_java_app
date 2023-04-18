@@ -1,10 +1,13 @@
-@Library('jenkins-shard-library') _
+@Library('mr_jenkins_shared_lib') _
 
 pipeline {
     agent any
 
     parameters{
         choice(name: 'action', choices: 'create\ndelete', description: 'choose create/Destroy')
+        string(name:'ImageName', description: "name of docker build", defaultValue:'javapp-vig')
+        string(name:'ImageTag', description: "Tag of docker build", defaultValue:'ver1')
+        string(name:'APPname', description: "name of Application", defaultValue:'springboot-vig')
     }
     stages {
             
@@ -87,6 +90,16 @@ pipeline {
             }
         }
 
+        stage ('Docker build image') {
+
+         when { expression { params.action=='create'}  }  
+            steps {
+                script {
+
+                    dockerBuild("${params.ImageName}","${params.ImageName}","${params.APPname}")
+                }
+            }
+        }
 
 
     }
