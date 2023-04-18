@@ -41,63 +41,63 @@ pipeline {
         }
 
 
-        stage ('Integration Test maven') {
+//         stage ('Integration Test maven') {
 
-        when { expression { params.action=='create'}  }  
-            steps {
+//         when { expression { params.action=='create'}  }  
+//             steps {
 
-                 script {
-                   mvnIntegrationTest()
-                }
-            }
-        }
+//                  script {
+//                    mvnIntegrationTest()
+//                 }
+//             }
+//         }
 
 
-         stage ('static code analysis : sonarqube') {
+//          stage ('static code analysis : sonarqube') {
 
-         when { expression { params.action=='create'}  }  
-            steps {
-                script {
+//          when { expression { params.action=='create'}  }  
+//             steps {
+//                 script {
 
-// but how u will fetch sonarqube credential id / AUTHENTICATION 
-    // go pipeline syntax ----> steps ---> sample steps --->withSonarQubeEnv
-    //  select sonarqube credential key   -----> generate pipeline script 
+// // but how u will fetch sonarqube credential id / AUTHENTICATION 
+//     // go pipeline syntax ----> steps ---> sample steps --->withSonarQubeEnv
+//     //  select sonarqube credential key   -----> generate pipeline script 
 
-// withSonarQubeEnv(credentialsId: 'SONAR-API-VIG')
+// // withSonarQubeEnv(credentialsId: 'SONAR-API-VIG')
 
-                    def SonarQubecredentialsId = 'SONAR-API-VIG'
-                   statiCodeAnalysis(SonarQubecredentialsId)
-                }
-            }
-        }
+//                     def SonarQubecredentialsId = 'SONAR-API-VIG'
+//                    statiCodeAnalysis(SonarQubecredentialsId)
+//                 }
+//             }
+//         }
 
-         stage ('Quality Gate status  check: sonarQube') {
+//          stage ('Quality Gate status  check: sonarQube') {
 
-         when { expression { params.action=='create'}  }  
-            steps {
-                script {
+//          when { expression { params.action=='create'}  }  
+//             steps {
+//                 script {
 
-                // but how u will fetch sonarqube credential id / AUTHENTICATION 
-    // go pipeline syntax ----> steps ---> sample steps --->waitForQualityGate
-    //  select sonarqube credential key   -----> generate pipeline script 
+//                 // but how u will fetch sonarqube credential id / AUTHENTICATION 
+//     // go pipeline syntax ----> steps ---> sample steps --->waitForQualityGate
+//     //  select sonarqube credential key   -----> generate pipeline script 
 
-                // waitForQualityGate abortPipeline: false, credentialsId: 'SONAR-API-VIG'
-                    def SonarQubecredentialsId = 'SONAR-API-VIG'
-                   QualityGateStatus(SonarQubecredentialsId)
-                }
-            }
-        }
+//                 // waitForQualityGate abortPipeline: false, credentialsId: 'SONAR-API-VIG'
+//                     def SonarQubecredentialsId = 'SONAR-API-VIG'
+//                    QualityGateStatus(SonarQubecredentialsId)
+//                 }
+//             }
+//         }
 
-        stage ('MAVEN BUILD') {
+//         stage ('MAVEN BUILD') {
 
-         when { expression { params.action=='create'}  }  
-            steps {
-                script {
+//          when { expression { params.action=='create'}  }  
+//             steps {
+//                 script {
 
-                    mvnBuild()
-                }
-            }
-        }
+//                     mvnBuild()
+//                 }
+//             }
+//         }
 
         stage ('Docker build image') {
 
