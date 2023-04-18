@@ -111,6 +111,17 @@ pipeline {
         }
 
 
+        stage ('Docker scan image') {
+
+         when { expression { params.action=='create'}  }  
+            steps {
+                script {
+
+                    dockerImageScan("${params.ImageName}","${params.ImageTag}","${params.DockerhubUser}")
+                }
+            }
+        }
+
 
     }
 
