@@ -76,6 +76,11 @@ pipeline {
          when { expression { params.action=='create'}  }  
             steps {
                 script {
+
+                // but how u will fetch sonarqube credential id / AUTHENTICATION 
+    // go pipeline syntax ----> steps ---> sample steps --->waitForQualityGate
+    //  select sonarqube credential key   -----> generate pipeline script 
+
                 // waitForQualityGate abortPipeline: false, credentialsId: 'SONAR-API-VIG'
                     def SonarQubecredentialsId = 'SONAR-API-VIG'
                    QualityGateStatus(SonarQubecredentialsId)
@@ -94,16 +99,16 @@ pipeline {
             }
         }
 
-        // stage ('Docker build image') {
+        stage ('Docker build image') {
 
-        //  when { expression { params.action=='create'}  }  
-        //     steps {
-        //         script {
+         when { expression { params.action=='create'}  }  
+            steps {
+                script {
 
-        //             dockerBuild("${params.ImageName}","${params.ImageName}","${params.APPname}")
-        //         }
-        //     }
-        // }
+                    dockerBuild("${params.ImageName}","${params.ImageName}","${params.APPname}")
+                }
+            }
+        }
 
 
     }
