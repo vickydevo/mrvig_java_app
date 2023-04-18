@@ -106,10 +106,10 @@ pipeline {
                 script {
 
                     dockerBuild("${params.ImageName}","${params.Imagetag}","${params.DockerhubUser}")
-}")
                 }
             }
         }
+
 
 
     }
