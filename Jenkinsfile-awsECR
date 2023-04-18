@@ -5,9 +5,9 @@ pipeline {
 
     parameters{
         choice(name: 'action', choices: 'create\ndelete', description: 'choose create/Destroy')
-        string(name:'ImageName', description: "name of docker build", defaultValue:'javapp-vig')
-        string(name:'ImageTag', description: "Tag of docker build", defaultValue:'ver1')
-        string(name:'DockerhubUser', description: "name of Application", defaultValue:'vignan91')
+        string(name:'aws_account_id', description: "Account Id no", defaultValue:'785600726584')
+        string(name:'region', description: "Name of the region", defaultValue:'us-east-1')
+        string(name:'ecr_repoName', description: "name of ecr_repoName", defaultValue:'arya')
     }
     stages {
             
@@ -89,6 +89,17 @@ pipeline {
                 script {
 
                     mvnBuild()
+                }
+            }
+        }
+
+        stage ('Docker BUILD : ECR') {
+
+         when { expression { params.action=='create'}  }  
+            steps {
+                script {
+
+                   dockerBuild("${params.aws_account_id}","${params.region}","${params.ecr_repoName}")
                 }
             }
         }
