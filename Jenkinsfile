@@ -57,9 +57,10 @@ pipeline {
     // go pipeline syntax ----> steps ---> sample steps --->withSonarQubeEnv
     //  select sonarqube credential key   -----> generate pipeline script 
 
-// withSonarQubeEnv(credentialsId: 'SONAR-API-VIG')
 
-                    def SonarQubecredentialsId = 'SONAR-API-VIG'
+// withSonarQubeEnv(credentialsId: 'sonar-api-vignan') {
+    // some block
+                    def SonarQubecredentialsId = 'sonar-api-vignan'
                    statiCodeAnalysis(SonarQubecredentialsId)
                 }
             }
@@ -76,7 +77,7 @@ pipeline {
     //  select sonarqube credential key   -----> generate pipeline script 
 
                 // waitForQualityGate abortPipeline: false, credentialsId: 'SONAR-API-VIG'
-                    def SonarQubecredentialsId = 'SONAR-API-VIG'
+                    def SonarQubecredentialsId = 'sonar-api-vignan'
                    QualityGateStatus(SonarQubecredentialsId)
                 }
             }
